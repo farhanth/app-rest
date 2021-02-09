@@ -1,0 +1,26 @@
+{
+  "name": "app-rest",
+  "version": "1.0.0",
+  "description": "[Practice] Node JS + Rest API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farhanth/app-rest.git"
+  },
+  "keywords": [
+    "Rest",
+    "API",
+    "Node",
+    "JS",
+    "Practice"
+  ],
+  "author": "Farhan Taufik Hidayat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farhanth/app-rest/issues"
+  },
+  "homepage": "https://github.com/farhanth/app-rest#readme"
+}
