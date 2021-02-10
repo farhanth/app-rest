@@ -8,6 +8,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+//call routes
+var routes = require('./routes')
+
+routes(app);
+
 app.listen(3000, () => {
     console.log(`Server started on port 3000`);
 });
