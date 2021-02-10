@@ -11,4 +11,7 @@ module.exports = function (app) {
 
     app.route('/mahasiswa/:id')
         .get(json.getMahasiswaByID);
+
+    app.route('/create')
+        .post(json.addMahasiswa);
 }
