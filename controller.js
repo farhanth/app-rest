@@ -34,7 +34,6 @@ exports.getMahasiswaByID = function (req, res) {
 }
 
 //add mahasiswa
-
 exports.addMahasiswa = function (req, res) {
     var npm = req.body.npm;
     var nama = req.body.nama;
@@ -47,6 +46,24 @@ exports.addMahasiswa = function (req, res) {
                 console.log(error);
             } else {
                 response.ok("Data mahasiswa successfully added", res);
+            }
+        });
+};
+
+//edit mahasiswa
+exports.editMahasiswa = function (req, res) {
+    let id = req.params.id;
+    var npm = req.body.npm;
+    var nama = req.body.nama;
+    var jurusan = req.body.jurusan;
+
+    connection.query('UPDATE mahasiswa SET npm=?, nama=?, jurusan=? WHERE id_mahasiswa=?',
+        [npm, nama, jurusan, id],
+        function (error, rows, field) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok("Data Data mahasiswa successfully changed", res);
             }
         });
 };
