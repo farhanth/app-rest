@@ -99,3 +99,8 @@ exports.login = function(req, res){
         }
     });
 }
+
+//test verify
+exports.testVerify = function(req,res){
+    response.ok("Test verify successfully (ROLE 2)", res)
+};
