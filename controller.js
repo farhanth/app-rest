@@ -2,6 +2,7 @@
 
 var response = require('./res');
 var connection = require('./connection');
+const conn = require('./connection');
 
 exports.index = function (req, res) {
     response.ok("Rest running successfully", res)
@@ -81,3 +82,16 @@ exports.deleteMahasiswa = function (req, res) {
             }
         });
 };
+
+//get matakuliah by group name
+exports.getMataKuliah = function (req, res){
+    conn.query('SELECT mahasiswa.id_mahasiswa, mahasiswa.npm, mahasiswa.nama, mahasiswa.jurusan, matakuliah.matakuliah, matakuliah.sks FROM krs JOIN matakuliah JOIN mahasiswa WHERE krs.id_matakuliah = matakuliah.id_matakuliah AND krs.id_mahasiswa = mahasiswa.id_mahasiswa ORDER BY mahasiswa.id_mahasiswa',
+        function(error, rows, field){
+            if(error){
+                console.log(error);
+            } else{
+                response.okNested(rows, res);
+            }
+        }
+    );
+}
