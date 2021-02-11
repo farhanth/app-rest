@@ -28,7 +28,9 @@ exports.registration = function (req, res){
             if(rows.length == 0){
                 var queryCreate = "INSERT INTO ?? SET ?";
                 var tableCreate = ["user"];
+
                 queryCreate = mysql.format(queryCreate, tableCreate);
+
                 connection.query(queryCreate, post, function(error, rows){
                     if(error){
                         console.log(error);
@@ -40,5 +42,60 @@ exports.registration = function (req, res){
                 response.ok('Email already registered!', res);
             }
         }
-    })
+    });
+}
+
+//module login
+exports.login = function(req, res){
+    var post = {
+        email: req.body.email,
+        password: req.body.password
+    };
+
+    var queryLogin = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
+    var tableLogin = ["user", "email", post.email, "password", md5(post.password)];
+
+    queryLogin = mysql.format(queryLogin, tableLogin);
+
+    connection.query(queryLogin, function(error, rows){
+        if(error){
+            console.log(error);
+        }else{
+            if(rows.length == 1){
+                var token = jwt.sign({rows}, config.secret, {
+                    expiresIn: 4320
+                });
+                id_user = rows[0].id_user;
+
+                var dataAccessToken = {
+                    id_user: id_user,
+                    access_token: token,
+                    ip_address: ip.address()
+                };
+
+                var queryToken = "INSERT INTO ?? SET ?";
+                var tableToken = ["akses_token"];
+
+                queryToken = mysql.format(queryToken, tableToken);
+
+                connection.query(queryToken, dataAccessToken, function(error,rows){
+                    if(error){
+                        console.log(error);
+                    } else{
+                        res.json({
+                            success: true,
+                            message: "JWT Token Generated Successfully",
+                            token: token,
+                            currUser: dataAccessToken.id_user
+                        });
+                    }
+                });
+            } else{
+                res.json({
+                    error: true,
+                    message: "Username and Password not found. Login Failed!"
+                });
+            }
+        }
+    });
 }
