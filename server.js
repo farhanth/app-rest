@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 
 //call morgan
 var morgan = require('morgan');
@@ -14,6 +15,8 @@ app.use(bodyParser.json());
 //use morgan
 app.use(morgan('dev'));
 
+app.use(cors());
+
 //call routes
 var routes = require('./routes')
 routes(app);
@@ -21,6 +24,6 @@ routes(app);
 //call routes from middleware index
 app.use('/auth', require('./middleware'));
 
-app.listen(3000, () => {
-    console.log(`Server started on port 3000`);
+app.listen(3001, () => {
+    console.log(`Server started on port 3001`);
 });
